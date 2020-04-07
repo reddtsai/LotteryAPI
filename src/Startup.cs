@@ -5,11 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
-namespace lotteryapi
+using lotteryapi.Repositories;
+
+namespace LotteryAPI
 {
     public class Startup
     {
@@ -24,6 +28,14 @@ namespace lotteryapi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<LotteryContext>(opt =>
+                opt.UseMySql("server=127.0.0.1;port=3306;user=root;password=0oibDF67wafbqNkF;database=TaiwanLottery", 
+                    mySqlOpt => 
+                    {
+                        mySqlOpt.ServerVersion(new Version(5, 7), ServerType.MySql);
+                        mySqlOpt.MaxBatchSize(1);
+                    }
+                )); 
             services.AddControllers();
         }
 
