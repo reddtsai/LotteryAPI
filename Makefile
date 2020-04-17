@@ -9,23 +9,25 @@ unittest:
 	@echo 'not implement unittest'
 
 deploy:
-	@echo 'not implement deploy'
+	sh gce.sh
 
-newbranch:
+publish:
+	dotnet publish src/lotteryapi.csproj -r linux-x64 --self-contained false --configuration Release
+
+restore:
+	dotnet restore src/lotteryapi.csproj
+
+clean:
+	dotnet clean src/lotteryapi.csproj
+
+createFeature:
 ifdef name
 	git checkout master
-	git checkout -b $(name)
-	git push -u origin $(name)
+	git checkout -b feature/$(name)
+	git push -u origin feature/$(name)
 else
 	@echo 'make newbranch name=NewBranchName'
 endif
-
-efScaffold:
-	dotnet ef dbcontext scaffold "server=127.0.0.1;port=3306;user=root;password=0oibDF67wafbqNkF;database=TaiwanLottery" \
-	Pomelo.EntityFrameworkCore.MySql \
-	-o Repositories/Entities \
-	--context-dir Repositories -c LotteryContext \
-	-p src -f
 
 addPackage:
 ifdef name
@@ -44,5 +46,12 @@ endif
 listSDK:
 	dotnet --list-sdks
 
-restore:
-	dotnet restore src/lotteryapi.csproj
+createGCE:
+	sh gce.sh
+
+efScaffold:
+	dotnet ef dbcontext scaffold "server=127.0.0.1;port=3306;user=root;password=0oibDF67wafbqNkF;database=TaiwanLottery" \
+	Pomelo.EntityFrameworkCore.MySql \
+	-o Repositories/Entities \
+	--context-dir Repositories -c LotteryContext \
+	-p src -f
