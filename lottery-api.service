@@ -3,7 +3,7 @@ Description=Lottery API running on Debian
 
 [Service]
 WorkingDirectory=/var/www/LotteryAPI
-ExecStart=/usr/bin/dotnet /var/www/LotteryAPI/lotteryapi.dll
+ExecStart=dotnet /var/www/LotteryAPI/lotteryapi.dll
 Restart=always
 # Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10
