@@ -41,7 +41,7 @@ sudo /usr/bin/dotnet --version
 # Setup api
 sudo /usr/bin/dotnet publish /usr/local/api/src/lotteryapi.csproj -r linux-x64 --self-contained false --configuration Release
 sleep 10
-sudo cp /usr/local/api/src/bin/Release/netcoreapp3.1/linux-x64/publish /var/www/LotteryAPI
+sudo cp -R /usr/local/api/src/bin/Release/netcoreapp3.1/linux-x64/publish /var/www/LotteryAPI
 sudo cp /usr/local/api/lottery-api.service /etc/systemd/system/lottery-api.service
 sudo systemctl enable lottery-api.service
 sudo systemctl start lottery-api.service
